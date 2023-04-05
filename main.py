@@ -66,6 +66,7 @@ def validate(opts, model, loader, device, metrics, timing, cl=15):
 
     with torch.no_grad():
         model = model.eval()
+        sct = ect = 0
         for i, (images, labels) in tqdm(enumerate(loader)):
 
             images = images.to(device, dtype=torch.float32)
@@ -83,7 +84,8 @@ def validate(opts, model, loader, device, metrics, timing, cl=15):
             preds = (preds == cl).astype(np.int64)
 
             metrics.update(targets, preds)
-            timing.update(ect - sct)
+            if i != 0:
+                timing.update(ect - sct)
 
             if opts.save_val_results:
                     for i in range(len(images)):

@@ -1,0 +1,178 @@
+ADE20K_DeiT_Seg_B+:
+	python main.py --input dataset/ --validate --ckpt models/ADE20K_DeiT_Seg_B+/checkpoint.pth --has_variant
+		No pretrained weights exist for this model. Using random initialization. (ser dog rigtigt ud...)
+			Overall Acc: 0.982062
+			Mean Acc: 0.659636
+			FreqW Acc: 0.966711
+			Mean IoU: 0.611612
+
+			avg: 0.005965
+			min: 0.005253
+			max: 0.006734
+
+ADE20K_DeiT_Seg_B+_Mask:
+	python main.py --input dataset/ --validate --ckpt models/ADE20K_DeiT_Seg_B+/checkpoint.pth --has_variant
+		No pretrained weights exist for this model. Using random initialization. (ser dog rigtigt ud...)
+			Overall Acc: 0.982062
+			Mean Acc: 0.659636
+			FreqW Acc: 0.966711
+			Mean IoU: 0.611612
+
+			avg: 0.005982
+			min: 0.005290
+			max: 0.006536
+
+ADE20K_ViT_Seg_B:
+	python main.py --input dataset/ --validate --ckpt models/ADE20K_ViT_Seg_B/checkpoint.pth --has_variant
+		No pretrained weights exist for this model. Using random initialization. (ser dog rigtigt ud...)
+			Overall Acc: 0.990630
+			Mean Acc: 0.662877
+			FreqW Acc: 0.982016
+			Mean IoU: 0.636033
+
+			avg: 0.006147
+			min: 0.005359
+			max: 0.008261
+
+ADE20K_ViT_Seg_B_Mask:
+	python main.py --input dataset/ --validate --ckpt models/ADE20K_ViT_Seg_B_Mask/checkpoint.pth --has_variant
+		Overall Acc: 0.976816
+		Mean Acc: 0.657920
+		FreqW Acc: 0.957795
+		Mean IoU: 0.598097
+
+		avg: 0.007444
+		min: 0.006725
+		max: 0.007900
+
+ADE20K_ViT_Seg_L_Mask:
+	python main.py --input dataset/ --validate --ckpt models/ADE20K_ViT_Seg_L_Mask/checkpoint.pth --has_variant
+		Overall Acc: 0.981582
+		Mean Acc: 0.659472
+		FreqW Acc: 0.965882
+		Mean IoU: 0.610333
+
+		avg: 0.011807
+		min: 0.011228
+		max: 0.012364
+
+ADE20K_ViT_Seg_S_Mask:
+	python main.py --input dataset/ --validate --ckpt models/ADE20K_ViT_Seg_S_Mask/checkpoint.pth --has_variant
+		Overall Acc: 0.979859
+		Mean Acc: 0.654941
+		FreqW Acc: 0.962766
+		Mean IoU: 0.605215
+
+		avg: 0.006482
+		min: 0.006024
+		max: 0.007220
+
+ADE20K_ViT_Seg_T_Mask:
+	python main.py --input dataset/ --validate --ckpt models/ADE20K_ViT_Seg_T_Mask/checkpoint.pth --has_variant
+		Overall Acc: 0.967225
+		Mean Acc: 0.653790
+		FreqW Acc: 0.942166
+		Mean IoU: 0.575481
+
+		avg: 0.007361
+		min: 0.006835
+		max: 0.008385
+
+Cityscapes_Seg_L_Mask:
+	python main.py --input dataset/ --validate --ckpt models/Cityscapes_Seg_L_Mask/checkpoint.pth --has_variant
+		Overall Acc: 0.974176
+		Mean Acc: 0.656827
+		FreqW Acc: 0.953408
+		Mean IoU: 0.591607
+
+		avg: 0.011960
+		min: 0.010464
+		max: 0.013509
+
+Pascal_Seg_L_Mask:
+	python main.py --input dataset/ --validate --ckpt models/Pascal_Seg_L_Mask/checkpoint.pth --has_variant
+		Overall Acc: 0.894193
+		Mean Acc: 0.333333
+		FreqW Acc: 0.799581
+		Mean IoU: 0.298064
+
+		avg: 0.013241
+		min: 0.011413
+		max: 0.014880
+
+best_deeplabv3_mobilenet_voc_os16:
+	python main.py --input dataset/ --validate --ckpt models/best_deeplabv3_mobilenet_voc_os16.pth --model deeplabv3_mobilenet
+		Overall Acc: 0.979490
+		Mean Acc: 0.619708
+		FreqW Acc: 0.960462
+		Mean IoU: 0.598187
+
+		avg: 0.008566
+		min: 0.007546
+		max: 0.009908
+
+best_deeplabv3_resnet50_voc_os16:
+	python main.py --input dataset/ --validate --ckpt models/best_deeplabv3_resnet50_voc_os16.pth --model deeplabv3_resnet50
+		Overall Acc: 0.970532
+		Mean Acc: 0.634788
+		FreqW Acc: 0.946371
+		Mean IoU: 0.578885
+
+		avg: 0.008808
+		min: 0.007999
+		max: 0.009984
+
+best_deeplabv3_resnet101_voc_os16:
+	python main.py --input dataset/ --validate --ckpt models/best_deeplabv3_resnet101_voc_os16.pth --model deeplabv3_resnet101
+		Overall Acc: 0.971382
+		Mean Acc: 0.630593
+		FreqW Acc: 0.947501
+		Mean IoU: 0.579962
+
+		avg: 0.015257
+		min: 0.014063
+		max: 0.016827
+
+best_deeplabv3plus_mobilenet_cityscapes_os16:
+	python main.py --input dataset/ --validate --ckpt models/best_deeplabv3plus_mobilenet_cityscapes_os16.pth --model deeplabv3plus_mobilenet --num_classes 19
+		Overall Acc: 0.868256
+		Mean Acc: 0.323761
+		FreqW Acc: 0.776412
+		Mean IoU: 0.289505
+
+		avg: 0.009446
+		min: 0.008576
+		max: 0.009950
+
+best_deeplabv3plus_mobilenet_voc_os16:
+	python main.py --input dataset/ --validate --ckpt models/best_deeplabv3plus_mobilenet_voc_os16.pth --model deeplabv3plus_mobilenet
+		Overall Acc: 0.984987
+		Mean Acc: 0.647886
+		FreqW Acc: 0.971381
+		Mean IoU: 0.617987
+
+		avg: 0.008924
+		min: 0.008294
+		max: 0.009692
+
+best_deeplabv3plus_resnet50_voc_os16:
+	python main.py --input dataset/ --validate --ckpt models/best_deeplabv3plus_resnet50_voc_os16.pth --model deeplabv3plus_resnet50
+		Overall Acc: 0.974321
+		Mean Acc: 0.603912
+		FreqW Acc: 0.950673
+		Mean IoU: 0.581101
+
+		avg: 0.009436
+		min: 0.008591
+		max: 0.010983
+
+best_deeplabv3plus_resnet101_voc_os16:
+	python main.py --input dataset/ --validate --ckpt models/best_deeplabv3plus_resnet101_voc_os16.pth --model deeplabv3plus_resnet101
+		Overall Acc: 0.981279
+		Mean Acc: 0.641383
+		FreqW Acc: 0.964620
+		Mean IoU: 0.606827
+
+		avg: 0.015918
+		min: 0.014345
+		max: 0.016809

@@ -114,6 +114,11 @@ def create_vit(model_cfg):
         model_cfg["image_size"][0],
         model_cfg["image_size"][1],
     )
+    
+    # if model_cfg["mlp_ratio"] exists remove it CG
+    if "mlp_ratio" in model_cfg:
+        model_cfg.pop("mlp_ratio")
+
     model = VisionTransformer(**model_cfg)
     if backbone == "vit_base_patch8_384":
         path = os.path.expandvars("$TORCH_HOME/hub/checkpoints/vit_base_patch8_384.pth")
