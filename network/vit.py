@@ -15,7 +15,7 @@ from timm.models.vision_transformer import _load_weights
 
 
 class PatchEmbedding(nn.Module):
-    def __init__(self, image_size, patch_size, embed_dim, channels):
+    def __init__(self, image_size:tuple[int,int], patch_size:int, embed_dim:int, channels:int):
         super().__init__()
 
         self.image_size = image_size
@@ -29,7 +29,7 @@ class PatchEmbedding(nn.Module):
             channels, embed_dim, kernel_size=patch_size, stride=patch_size
         )
 
-    def forward(self, im):
+    def forward(self, im:torch.Tensor) -> torch.Tensor:
         B, C, H, W = im.shape
         x = self.proj(im).flatten(2).transpose(1, 2)
         return x
@@ -105,11 +105,11 @@ class VisionTransformer(nn.Module):
     def load_pretrained(self, checkpoint_path, prefix=""):
         _load_weights(self, checkpoint_path, prefix)
 
-    def forward(self, im, return_features=False):
+    def forward(self, im:torch.Tensor, return_features:bool=False) -> torch.Tensor:
         B, _, H, W = im.shape
         PS = self.patch_size
 
-        x = self.patch_embed(im)
+        x:torch.Tensor = self.patch_embed(im)
         cls_tokens = self.cls_token.expand(B, -1, -1)
         if self.distilled:
             dist_tokens = self.dist_token.expand(B, -1, -1)
@@ -118,6 +118,7 @@ class VisionTransformer(nn.Module):
             x = torch.cat((cls_tokens, x), dim=1)
 
         pos_embed = self.pos_embed
+        
         num_extra_tokens = 1 + self.distilled
         if x.shape[1] != pos_embed.shape[1]:
             pos_embed = resize_pos_embed(

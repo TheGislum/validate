@@ -131,7 +131,7 @@ def init_weights(m):
         nn.init.constant_(m.weight, 1.0)
 
 
-def resize_pos_embed(posemb, grid_old_shape, grid_new_shape, num_extra_tokens):
+def resize_pos_embed(posemb:nn.Parameter, grid_old_shape:tuple[int,int], grid_new_shape:tuple[int,int], num_extra_tokens:int) -> nn.Parameter:
     # Rescale the grid of position embeddings when loading from state_dict. Adapted from
     # https://github.com/google-research/vision_transformer/blob/00883dd691c63a6830751563748663526e811cee/vit_jax/checkpoint.py#L224
     posemb_tok, posemb_grid = (

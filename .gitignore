@@ -149,3 +149,6 @@ dmypy.json
 dataset
 models
 results/
+opti_dataset/
+*.pt
+*.ptl

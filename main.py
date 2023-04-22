@@ -51,6 +51,8 @@ def get_argparser():
                         help="apply separable conv to decoder and aspp")
     parser.add_argument("--save_val_results", action='store_true', default=False,
                         help="save segmentation results to \"./results\"")
+    parser.add_argument("--to_mobile", action='store_true', default=False,
+                        help="convert model to mobile")
 
     return parser
 
@@ -157,14 +159,16 @@ def get_dataset(opts):
 def main():
     args = get_argparser().parse_args()
 
-    if args.no_cuda:
+    if args.no_cuda or args.to_mobile: # maby not with to_mobile?
         device = torch.device('cpu')
     else:
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
+    
     # Setup dataloader
-    val_dst = get_dataset(args)
-    if args.validate:
+    # if args.to_mobile:
+    #     args.batch_size = 4
+    if args.validate or args.to_mobile:
+        val_dst = get_dataset(args)
         val_loader = data.DataLoader(val_dst, batch_size=args.batch_size, shuffle=True, num_workers=2)
     else:
         image_files = []
@@ -212,7 +216,40 @@ def main():
     metrics = StreamSegMetrics(args.num_classes)
     timing = timeMetrics()
 
-    if args.validate:
+    if args.to_mobile:
+        model = model.eval().to(device)
+        if args.has_variant:
+            name = variant['net_kwargs']['backbone']
+        else:
+            name = args.model
+
+        # Fuse Modules
+        # model.fuse_model()
+
+        # Quantization 
+        backend = "x86"
+        model.qconfig = torch.quantization.get_default_qconfig(backend)
+        torch.backends.quantized.engine = backend
+
+        # torch.quantization.prepare(model, inplace=True)
+        # # validate(args, model, val_loader, device, metrics, timing, cl)
+        # torch.quantization.convert(model, inplace=True)
+
+        torch.quantization.quantize_dynamic(model, qconfig_spec={torch.nn.Linear}, dtype=torch.qint8, inplace=True)
+
+        # Tracing
+        # dummy_input = val_loader.dataset[0][0].unsqueeze(0).to(device)
+        dummy_input = torch.randn(1, 3, 270, 480)
+        scripted = torch.jit.trace(model.eval(), (dummy_input))
+
+        # Scripting
+        # scripted = torch.jit.script(model)
+        
+        from torch.utils.mobile_optimizer import optimize_for_mobile
+        mobile_backend = "CPU" # ('CPU'(default), 'Vulkan' or 'Metal')
+        optimized_scripted_model = optimize_for_mobile(scripted, backend=mobile_backend) # vulkan backend?
+        optimized_scripted_model._save_for_lite_interpreter(f"{mobile_backend}_{name}.ptl")
+    elif args.validate:
         val_score, val_time = validate(args, model, val_loader, device, metrics, timing, cl)
         print(metrics.to_str(val_score))
         print(timing.to_str(val_time))
